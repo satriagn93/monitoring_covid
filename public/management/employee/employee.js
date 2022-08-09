@@ -1,5 +1,7 @@
 $(document).ready(function () {
     $("#tb_employee").DataTable({
+        processing: true,
+        serverSide: true,
         ajax:true,
         columns : [
             { data: 'DT_RowIndex', 'searchable': false, class: 'text-center' },
@@ -9,10 +11,8 @@ $(document).ready(function () {
             { data: 'position', name: 'position' ,class: 'text-center'  },
             { data: 'handphone', name: 'handphone' ,class: 'text-center'  },
             { data: "action", name: "action", class: "text-center" },
-        ],
-        "responsive": true, "lengthChange": false, "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('#tb_employee .col-md-6:eq(0)');
+        ]
+    });
 });
 
 function createNew() {
