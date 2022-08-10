@@ -25,25 +25,29 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $data = Employee::all();
+        // $rdcode = Employee::all();
+
+        $curl = curl_init();
+        curl_setopt_array($curl, [
+            CURLOPT_URL => "https://api.npoint.io/99c279bb173a6e28359c/data",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+        ]);
+
+        $response = curl_exec($curl);
+        $rdcode = json_decode($response);
         if (request()->ajax()) {
-            return DataTables::of($data)
-                ->addColumn('name', function ($get) {
-                    return '<a href="/employee/' . $get->id . '/detail">' . $get->name . '</a>';
-                })
-                ->addColumn('gender', function ($get) {
-                    return  $get->gender;
-                })
-                ->addColumn('action', function ($get) {
-                    $button = '<a href="/employee/' . $get->id . '/edit" title="Edit" class="btn btn-info btn-sm"><i class="fas fa-pencil-alt"></i> Edit</a>';
-                    $button .= '<a onclick="deleteemployee(' . $get->id . ')" title="Delete" class="btn btn-danger btn-sm btn-delete-' . $get->id . '" style="color: white; margin-left:5px;"><i class="fas fa-trash"></i> Delete</a>';
-                    return $button;
-                })
+            return DataTables::of($rdcode)
                 ->addIndexColumn()
-                ->rawColumns(['name', 'gender', 'action'])
                 ->make(true);
         }
-        return view('employee.index', $data);
+
+        return view('employee.index', ['data' => $rdcode]);
     }
 
     public function member()

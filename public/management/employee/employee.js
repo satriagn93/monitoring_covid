@@ -1,19 +1,4 @@
-$(document).ready(function () {
-    $("#tb_employee").DataTable({
-        processing: true,
-        serverSide: true,
-        ajax:true,
-        columns : [
-            { data: 'DT_RowIndex', 'searchable': false, class: 'text-center' },
-            { data: 'name', name: 'name' ,class: 'text-left'  },
-            { data: 'gender', name: 'gender' ,class: 'text-center'  },
-            { data: 'profession', name: 'profession' ,class: 'text-center'  },
-            { data: 'position', name: 'position' ,class: 'text-center'  },
-            { data: 'handphone', name: 'handphone' ,class: 'text-center'  },
-            { data: "action", name: "action", class: "text-center" },
-        ]
-    });
-});
+
 
 function createNew() {
     $(".AddEmployee").fadeIn();
